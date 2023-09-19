@@ -93,6 +93,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  //EX1//
   while (1)
   {
 	  if(count <= 0) {
