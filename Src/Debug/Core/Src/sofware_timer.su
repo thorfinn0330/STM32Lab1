@@ -1,0 +1,4 @@
+../Core/Src/sofware_timer.c:16:6:setTimer1	16	static
+../Core/Src/sofware_timer.c:20:6:setTimer2	16	static
+../Core/Src/sofware_timer.c:24:6:setTimer3	16	static
+../Core/Src/sofware_timer.c:28:6:timerRun	4	static
