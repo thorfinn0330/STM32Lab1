@@ -167,9 +167,11 @@ int main(void)
 		  }
 		  counter = 100;
 		  num++;
+
+		  //clearAllClock();
+
 	  }
 	  counter--;
-
 	  HAL_Delay(10);
     /* USER CODE END WHILE */
 

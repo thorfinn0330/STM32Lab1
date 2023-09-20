@@ -391,12 +391,14 @@ int main(void)
  800037e:	683b      	ldr	r3, [r7, #0]
  8000380:	3301      	adds	r3, #1
  8000382:	603b      	str	r3, [r7, #0]
+
+		  //clearAllClock();
+
 	  }
 	  counter--;
  8000384:	687b      	ldr	r3, [r7, #4]
  8000386:	3b01      	subs	r3, #1
  8000388:	607b      	str	r3, [r7, #4]
-
 	  HAL_Delay(10);
  800038a:	200a      	movs	r0, #10
  800038c:	f000 f956 	bl	800063c <HAL_Delay>
