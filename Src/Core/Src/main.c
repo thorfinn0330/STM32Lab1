@@ -190,22 +190,17 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
- int counter = 100;
+ int counter = 0;
  int num = 0;
  clearAllClock();
   while (1)
   {
-	  if(num > 11) num=0;
-	  if(counter <=0 ) {
-		  setNumberOnClock(num);
-		  counter = 100;
-		  if(num%2==0) clearNumberOnClock(num);
-		  num++;
-
-
-	  }
-	  counter--;
-	  HAL_Delay(10);
+	  clearAllClock();
+	  setNumberOnClock(num%12); //num/5%12
+	  setNumberOnClock(((num/60)/5)%12);
+	  setNumberOnClock((num/3600)%12);
+	  num++;
+	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
