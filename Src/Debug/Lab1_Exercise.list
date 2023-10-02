@@ -29,23 +29,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
  12 .comment      00000043  00000000  00000000  00020035  2**0
                   CONTENTS, READONLY
- 13 .debug_info   00002840  00000000  00000000  00020078  2**0
+ 13 .debug_info   00002858  00000000  00000000  00020078  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 00000dee  00000000  00000000  000228b8  2**0
+ 14 .debug_abbrev 00000df7  00000000  00000000  000228d0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_aranges 000003d0  00000000  00000000  000236a8  2**3
+ 15 .debug_aranges 000003d0  00000000  00000000  000236c8  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_rnglists 000002b7  00000000  00000000  00023a78  2**0
+ 16 .debug_rnglists 000002b7  00000000  00000000  00023a98  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  00015539  00000000  00000000  00023d2f  2**0
+ 17 .debug_macro  00015539  00000000  00000000  00023d4f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   0000491a  00000000  00000000  00039268  2**0
+ 18 .debug_line   0000491a  00000000  00000000  00039288  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    00079785  00000000  00000000  0003db82  2**0
+ 19 .debug_str    00079785  00000000  00000000  0003dba2  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_frame  00000d30  00000000  00000000  000b7308  2**2
+ 20 .debug_frame  00000d30  00000000  00000000  000b7328  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 0000003e  00000000  00000000  000b8038  2**0
+ 21 .debug_line_str 0000003e  00000000  00000000  000b8058  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -109,50 +109,50 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
  800015a:	f000 f85f 	bl	800021c <MX_GPIO_Init>
-  /* USER CODE BEGIN 2 */
+  /* USER CODE END 2 */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  //EX1//
   int count = 200;
  800015e:	23c8      	movs	r3, #200	; 0xc8
  8000160:	607b      	str	r3, [r7, #4]
-  HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, 0);
+  HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, RESET);
  8000162:	2200      	movs	r2, #0
  8000164:	2120      	movs	r1, #32
  8000166:	480e      	ldr	r0, [pc, #56]	; (80001a0 <main+0x54>)
  8000168:	f000 fbec 	bl	8000944 <HAL_GPIO_WritePin>
-  HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, 1);
+  HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, SET);
  800016c:	2201      	movs	r2, #1
  800016e:	2140      	movs	r1, #64	; 0x40
  8000170:	480b      	ldr	r0, [pc, #44]	; (80001a0 <main+0x54>)
  8000172:	f000 fbe7 	bl	8000944 <HAL_GPIO_WritePin>
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if(count <= 0) {
- 8000176:	687b      	ldr	r3, [r7, #4]
- 8000178:	2b00      	cmp	r3, #0
- 800017a:	dc09      	bgt.n	8000190 <main+0x44>
-		  HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
- 800017c:	2120      	movs	r1, #32
- 800017e:	4808      	ldr	r0, [pc, #32]	; (80001a0 <main+0x54>)
- 8000180:	f000 fbf8 	bl	8000974 <HAL_GPIO_TogglePin>
-		  HAL_GPIO_TogglePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin);
- 8000184:	2140      	movs	r1, #64	; 0x40
- 8000186:	4806      	ldr	r0, [pc, #24]	; (80001a0 <main+0x54>)
- 8000188:	f000 fbf4 	bl	8000974 <HAL_GPIO_TogglePin>
-
-		  count = 200;
- 800018c:	23c8      	movs	r3, #200	; 0xc8
- 800018e:	607b      	str	r3, [r7, #4]
-	  }
 	  count--;
- 8000190:	687b      	ldr	r3, [r7, #4]
- 8000192:	3b01      	subs	r3, #1
+ 8000176:	687b      	ldr	r3, [r7, #4]
+ 8000178:	3b01      	subs	r3, #1
+ 800017a:	607b      	str	r3, [r7, #4]
+	  if(count <= 0) {
+ 800017c:	687b      	ldr	r3, [r7, #4]
+ 800017e:	2b00      	cmp	r3, #0
+ 8000180:	dc09      	bgt.n	8000196 <main+0x4a>
+		  HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+ 8000182:	2120      	movs	r1, #32
+ 8000184:	4806      	ldr	r0, [pc, #24]	; (80001a0 <main+0x54>)
+ 8000186:	f000 fbf5 	bl	8000974 <HAL_GPIO_TogglePin>
+		  HAL_GPIO_TogglePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin);
+ 800018a:	2140      	movs	r1, #64	; 0x40
+ 800018c:	4804      	ldr	r0, [pc, #16]	; (80001a0 <main+0x54>)
+ 800018e:	f000 fbf1 	bl	8000974 <HAL_GPIO_TogglePin>
+		  count = 200;
+ 8000192:	23c8      	movs	r3, #200	; 0xc8
  8000194:	607b      	str	r3, [r7, #4]
+	  }
 	  HAL_Delay(10);
  8000196:	200a      	movs	r0, #10
  8000198:	f000 f950 	bl	800043c <HAL_Delay>
-	  if(count <= 0) {
+	  count--;
  800019c:	e7eb      	b.n	8000176 <main+0x2a>
  800019e:	bf00      	nop
  80001a0:	40010800 	.word	0x40010800
