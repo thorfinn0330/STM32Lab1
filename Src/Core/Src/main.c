@@ -103,68 +103,62 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-    int count1 = 500, count2 = 200, display_mode = 0;
-    int state1 = 0, state2 = 1;
-    while (1)
-    {
-    	HAL_GPIO_WritePin(LED7SEG_EN_1_GPIO_Port, LED7SEG_EN_1_Pin, SET);
-    	HAL_GPIO_WritePin(LED7SEG_EN_2_GPIO_Port, LED7SEG_EN_2_Pin, SET);
-  		  if(state1 == 0) {
-  			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_YELLOW1_GPIO_Port, LED_YELLOW1_Pin, SET);
-			HAL_GPIO_WritePin(LED_GREEN1_GPIO_Port, LED_GREEN1_Pin, SET);
 
-  			  if(count1 <= 0) {
-				  state1 = 1;
-				  count1 = 300;
-			}
-  		  }
-  		  if(state1 == 1) {
-  			  HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, SET);
-			  HAL_GPIO_WritePin(LED_YELLOW1_GPIO_Port, LED_YELLOW1_Pin, SET);
-			  HAL_GPIO_WritePin(LED_GREEN1_GPIO_Port, LED_GREEN1_Pin, RESET);
-  			  if(count1 <= 0) {
-				  state1 = 2;
-				  count1 = 200;
-  			  }
-  		  }
-  		  if(state1 == 2) {
-				HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, SET);
-				HAL_GPIO_WritePin(LED_YELLOW1_GPIO_Port, LED_YELLOW1_Pin, RESET);
-				HAL_GPIO_WritePin(LED_GREEN1_GPIO_Port, LED_GREEN1_Pin, SET);
-  			  if(count1 <= 0){
-				  state1 = 0;
-				  count1 = 500;
-  			  }
-  		  }
-  		if(state2 == 0) {
-  			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, RESET);
-  			HAL_GPIO_WritePin(LED_YELLOW2_GPIO_Port, LED_YELLOW2_Pin, SET);
-			HAL_GPIO_WritePin(LED_GREEN2_GPIO_Port, LED_GREEN2_Pin, SET);
-			  if(count2 <= 0) {
-				  state2 = 1;
-				  count2 = 300;
-			}
-		  }
-		  if(state2 == 1) {
-			  HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, SET);
-			  HAL_GPIO_WritePin(LED_YELLOW2_GPIO_Port, LED_YELLOW2_Pin, SET);
-			  HAL_GPIO_WritePin(LED_GREEN2_GPIO_Port, LED_GREEN2_Pin, RESET);
-			  if(count2 <= 0) {
-				  state2 = 2;
+
+	void setLedOnWay1(char *led) {
+	  HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, led=="RED"?RESET:SET);
+	  HAL_GPIO_WritePin(LED_YELLOW1_GPIO_Port, LED_YELLOW1_Pin, led=="YELLOW"?RESET:SET);
+	  HAL_GPIO_WritePin(LED_GREEN1_GPIO_Port, LED_GREEN1_Pin, led=="GREEN"?RESET:SET);
+	}
+	void setLedOnWay2(char *led) {
+	  HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, led=="RED"?RESET:SET);
+	  HAL_GPIO_WritePin(LED_YELLOW2_GPIO_Port, LED_YELLOW2_Pin, led=="YELLOW"?RESET:SET);
+	  HAL_GPIO_WritePin(LED_GREEN2_GPIO_Port, LED_GREEN2_Pin, led=="GREEN"?RESET:SET);
+	}
+
+	int count1 = 500, count2 = 300, display_mode = 0;
+	int state = 0;
+	   while (1)
+	   {
+		   HAL_GPIO_WritePin(LED7SEG_EN_1_GPIO_Port, LED7SEG_EN_1_Pin, SET);
+		   HAL_GPIO_WritePin(LED7SEG_EN_2_GPIO_Port, LED7SEG_EN_2_Pin, SET);
+
+		  switch(state) {
+		  case 0:					//RED1_GREEN2 : 3s
+			  setLedOnWay1("RED");
+			  setLedOnWay2("GREEN");
+			  if(count2 <=0) {
+				  state = 1;
 				  count2 = 200;
 			  }
-		  }
-		  if(state2 == 2) {
-			  HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, SET);
-			  HAL_GPIO_WritePin(LED_YELLOW2_GPIO_Port, LED_YELLOW2_Pin, RESET);
-			  HAL_GPIO_WritePin(LED_GREEN2_GPIO_Port, LED_GREEN2_Pin, SET);
-			  if(count2 <= 0){
-				  state2 = 0;
+			  break;
+		  case 1:					//RED1_YELLOW2 : 2s
+			  setLedOnWay1("RED");
+			  setLedOnWay2("YELLOW");
+			  if(count1 <=0) {
+				  state = 2;
+				  count1 = 300;
 				  count2 = 500;
 			  }
+			  break;
+		  case 2:					//GREEN1_RED2 : 3s
+			  setLedOnWay1("GREEN");
+			  setLedOnWay2("RED");
+			  if(count1 <=0) {
+				  state = 3;
+				  count1 = 200;
+			  }
+			  break;
+		  case 3:					//YELLOW1_RED2 : 2s
+			  setLedOnWay1("YELLOW");
+			  setLedOnWay2("RED");
+			  if(count2 <=0) {
+				  state = 0;
+				  count1 = 500;
+				  count2 = 300;
+			  }
+			  break;
 		  }
-
 		  if(display_mode == 1) {
 			  display7SEG(count1/100);
 			  HAL_GPIO_WritePin(LED7SEG_EN_1_GPIO_Port, LED7SEG_EN_1_Pin, RESET);
